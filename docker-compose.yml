@@ -1,0 +1,18 @@
+services:
+  app:
+    build: .
+    image: qaldyq:local
+    init: true
+    ports:
+      - "${FOODSAVER_BIND:-127.0.0.1}:${FOODSAVER_PORT:-8000}:8000"
+    environment:
+      FOODSAVER_DB_PATH: /data/foodsaver.db
+      QALDYQ_ENV: ${QALDYQ_ENV:-production}
+      QALDYQ_COOKIE_SECURE: ${QALDYQ_COOKIE_SECURE:-true}
+      QALDYQ_FORWARDED_ALLOW_IPS: ${QALDYQ_FORWARDED_ALLOW_IPS:-127.0.0.1}
+    volumes:
+      - foodsaver-data:/data
+    restart: unless-stopped
+
+volumes:
+  foodsaver-data:
